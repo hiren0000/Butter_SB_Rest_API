@@ -8,6 +8,7 @@ public class ButterSbApiApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ButterSbApiApplication.class, args);
+		System.out.println("Test your API endpoints :) ");
 	}
 
 }

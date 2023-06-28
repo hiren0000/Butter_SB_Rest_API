@@ -1,5 +1,6 @@
 package com.rebel.Ecom.Butter_sb_API.Services;
 
+import com.rebel.Ecom.Butter_sb_API.Models.Category;
 import com.rebel.Ecom.Butter_sb_API.Models.User;
 import org.springframework.stereotype.Service;
 
@@ -22,4 +23,6 @@ public interface UserService
 
     //Deleting User
     public void deleteUser(Integer id);
+
+
 }

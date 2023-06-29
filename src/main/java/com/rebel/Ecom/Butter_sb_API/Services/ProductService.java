@@ -25,6 +25,9 @@ public interface ProductService
     //get Products for specific category
     public List<Product> getListOfProfForCat(Integer catId);
 
+    //get Products for specific category
+    public List<Product> getListOfProfForSubCat(Integer scatId);
+
     //Fetch products only which are in available state
     public List<Product> getAvailable();
 }

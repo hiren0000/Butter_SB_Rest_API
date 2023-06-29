@@ -36,4 +36,7 @@ public class Product
     @ManyToOne(fetch = FetchType.EAGER)
     private Category category;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    private SubCategory subCategory;
+
 }

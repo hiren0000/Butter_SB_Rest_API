@@ -2,8 +2,10 @@ package com.rebel.Ecom.Butter_sb_API.Services.ServiceImpl;
 
 import com.rebel.Ecom.Butter_sb_API.Models.Category;
 import com.rebel.Ecom.Butter_sb_API.Models.Product;
+import com.rebel.Ecom.Butter_sb_API.Models.SubCategory;
 import com.rebel.Ecom.Butter_sb_API.Repo.CategoryRepo;
 import com.rebel.Ecom.Butter_sb_API.Repo.ProductRepo;
+import com.rebel.Ecom.Butter_sb_API.Repo.SubCategoryRepo;
 import com.rebel.Ecom.Butter_sb_API.Services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,9 @@ public class ProductServiceImpl implements ProductService
 
     @Autowired
     private CategoryRepo categoryRepo;
+
+    @Autowired
+    private SubCategoryRepo subCategoryRepo;
 
     //Add or Update
     @Override
@@ -63,6 +68,17 @@ public class ProductServiceImpl implements ProductService
 
         return this.productRepo.findByCategory(category);
     }
+
+    //Fetching for SubCategory
+    @Override
+    public List<Product> getListOfProfForSubCat(Integer scatId)
+    {
+
+        SubCategory subCategory = this.subCategoryRepo.getById(scatId);
+
+        return this.productRepo.findBySubCategory(subCategory);
+    }
+
 
     //Fetching which are only available
     @Override

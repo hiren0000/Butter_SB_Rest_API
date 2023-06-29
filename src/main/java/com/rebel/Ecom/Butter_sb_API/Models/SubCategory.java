@@ -10,27 +10,25 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @Entity
-@Table(name = "butter_category")
+@Table(name ="butter_subcategory")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class Category
+public class SubCategory
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer catId;
-    private String catName;
-    private String catDes;
+    private Integer scatId;
+    private String scatName;
+    private String scatDes;
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JsonIgnore
+    private Category category;
+
+    @OneToMany(mappedBy = "subCategory", cascade = CascadeType.ALL)
     @JsonIgnore
     List<Product> products = new ArrayList<>();
-
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
-    @JsonIgnore
-    List<SubCategory> subCategories = new ArrayList<>();
-
 }

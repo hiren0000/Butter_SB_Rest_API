@@ -60,6 +60,13 @@ public class ProductController
         return new ResponseEntity<>(this.productService.getListOfProfForCat(catId),HttpStatus.OK);
     }
 
+    //Fetching list of Prod for specific category
+    @GetMapping("/subCategory/{scatId}")
+    public ResponseEntity<List<Product>> getListOfProBySubCate(@PathVariable Integer scatId)
+    {
+        return new ResponseEntity<>(this.productService.getListOfProfForSubCat(scatId),HttpStatus.OK);
+    }
+
     @GetMapping("/list-available-prods")
     public ResponseEntity<List<Product>> getListOfProByCate()
     {

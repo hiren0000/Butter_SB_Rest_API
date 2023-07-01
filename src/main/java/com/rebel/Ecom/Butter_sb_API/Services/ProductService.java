@@ -7,7 +7,10 @@ import java.util.List;
 
 public interface ProductService
 {
-    //Add New Product or update existing
+    //Add new prod for only category
+    public Product addNewProd(Product product);
+
+    //Add New Product for specific sub category
     public Product addProduct(Product product);
 
     //update existing

@@ -17,8 +17,15 @@ public class ProductController
     @Autowired
     private ProductService productService;
 
-    //Adding
-    @PostMapping("/adding-prod")
+    @PostMapping("/category/adding-prod")
+    public ResponseEntity<Product> addNewProforCat(@RequestBody Product product)
+    {
+        return new ResponseEntity<>(this.productService.addNewProd(product), HttpStatus.OK );
+    }
+
+
+    //Adding product for subcategory for product
+    @PostMapping("/category/subcategory/adding-prod")
     public ResponseEntity<Product> addNewPro(@RequestBody Product product)
     {
         return new ResponseEntity<>(this.productService.addProduct(product), HttpStatus.OK );

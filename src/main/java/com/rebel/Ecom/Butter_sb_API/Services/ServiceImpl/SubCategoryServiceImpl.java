@@ -7,6 +7,7 @@ import com.rebel.Ecom.Butter_sb_API.Repo.SubCategoryRepo;
 import com.rebel.Ecom.Butter_sb_API.Services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.ResourceAccessException;
 
 import java.util.List;
 
@@ -23,6 +24,8 @@ public class SubCategoryServiceImpl implements SubCategoryService
     @Override
     public SubCategory addCategory(SubCategory subCategory)
     {
+        Category category = this.categoryRepo.findById(subCategory.getCategory().getCatId()).
+                orElseThrow(() -> new ResourceAccessException("Category does not exists !! "));
 
         return this.subCategoryRepo.save(subCategory);
     }

@@ -8,7 +8,9 @@ import com.rebel.Ecom.Butter_sb_API.Repo.ProductRepo;
 import com.rebel.Ecom.Butter_sb_API.Repo.SubCategoryRepo;
 import com.rebel.Ecom.Butter_sb_API.Services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.ResourceAccessException;
 
 import java.util.List;
 
@@ -24,10 +26,27 @@ public class ProductServiceImpl implements ProductService
     @Autowired
     private SubCategoryRepo subCategoryRepo;
 
-    //Add or Update
+    //Add new product only for cat
+    @Override
+    public Product addNewProd(Product product)
+    {
+         Category category = this.categoryRepo.findById(product.getCategory().getCatId()).
+                    orElseThrow(() -> new ResourceAccessException("Category does not exist !!"));
+
+         return this.productRepo.save(product);
+    }
+
+    //Add product for subCategory
     @Override
     public Product addProduct(Product product)
+
     {
+        Category category = this.categoryRepo.findById(product.getCategory().getCatId()).
+                orElseThrow(() -> new ResourceAccessException("Category does not exists !!"));
+
+        SubCategory subCategory = this.subCategoryRepo.findById(product.getSubCategory().getScatId()).
+                orElseThrow(() -> new ResourceAccessException("SubCategory does not exists !!"));
+
         return this.productRepo.save(product);
     }
 

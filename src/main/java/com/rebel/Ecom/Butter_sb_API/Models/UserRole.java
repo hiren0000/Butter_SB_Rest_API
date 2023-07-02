@@ -5,19 +5,18 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-@Entity
-@Table(name = "butter_userRoles")
 public class UserRole
 {
-    private Integer id;
-    private String rname;
+    @Id
+    private Integer rId;
+    private String rName;
 
 
 }

@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -26,6 +28,9 @@ public class User
     private Integer phone;
     private String profile;
     private boolean enabled =false;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<UserRole> roles = new ArrayList<>();
 
 
 

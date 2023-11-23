@@ -24,9 +24,9 @@ public class SubCategory
     private String scatName;
     private String scatDes;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JsonIgnore
-    private Category category;
+     private Category category;
 
     @OneToMany(mappedBy = "subCategory", cascade = CascadeType.ALL)
     @JsonIgnore

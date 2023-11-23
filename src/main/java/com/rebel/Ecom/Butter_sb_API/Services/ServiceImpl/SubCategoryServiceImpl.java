@@ -22,10 +22,12 @@ public class SubCategoryServiceImpl implements SubCategoryService
 
     //Add new Category
     @Override
-    public SubCategory addCategory(SubCategory subCategory)
+    public SubCategory addSubCategory(SubCategory subCategory, Integer cId)
     {
-        Category category = this.categoryRepo.findById(subCategory.getCategory().getCatId()).
+        Category category = this.categoryRepo.findById(cId).
                 orElseThrow(() -> new ResourceAccessException("Category does not exists !! "));
+
+        subCategory.setCategory(category);
 
         return this.subCategoryRepo.save(subCategory);
     }

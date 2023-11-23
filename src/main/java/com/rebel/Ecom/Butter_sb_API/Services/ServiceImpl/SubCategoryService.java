@@ -8,7 +8,7 @@ import java.util.List;
 public interface SubCategoryService
 {
     //creating sub-category
-    public SubCategory addCategory(SubCategory subCategory);
+    public SubCategory addSubCategory(SubCategory subCategory, Integer cId);
 
     //update sub-category
     public SubCategory updateCate(SubCategory subCategory);

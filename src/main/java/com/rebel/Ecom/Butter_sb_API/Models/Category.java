@@ -29,8 +29,7 @@ public class Category
     @JsonIgnore
     List<Product> products = new ArrayList<>();
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
-    @JsonIgnore
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     List<SubCategory> subCategories = new ArrayList<>();
 
 }

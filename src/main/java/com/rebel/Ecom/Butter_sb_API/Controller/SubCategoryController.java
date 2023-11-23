@@ -20,10 +20,10 @@ public class SubCategoryController
     private SubCategoryService subCategoryService;
 
     //Adding new sub-category
-    @PostMapping("/")
-    public ResponseEntity<SubCategory> addCategory(@RequestBody SubCategory subCategory)
+    @PostMapping("/category/{catId}/")
+    public ResponseEntity<SubCategory> addCategory(@RequestBody SubCategory subCategory, @PathVariable Integer catId)
     {
-       SubCategory addedCate = this.subCategoryService.addCategory(subCategory);
+       SubCategory addedCate = this.subCategoryService.addSubCategory(subCategory, catId);
         return ResponseEntity.ok(addedCate);
     }
 

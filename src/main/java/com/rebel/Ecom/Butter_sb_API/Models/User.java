@@ -33,7 +33,7 @@ public class User implements UserDetails
     private String password;
     private Integer phone;
     private String profile;
-    private boolean enabled =false;
+    private boolean enabled = true;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<UserRole> roles = new ArrayList<>();

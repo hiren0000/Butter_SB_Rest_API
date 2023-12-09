@@ -18,7 +18,7 @@ public class UserController
     private UserService userService;
 
     //Creating new User
-    @PostMapping("/")
+    @PostMapping("/adding-new-user")
     public ResponseEntity<User> addNewUser(@RequestBody User user)
     {
         User createdUser = this.userService.addUser(user);

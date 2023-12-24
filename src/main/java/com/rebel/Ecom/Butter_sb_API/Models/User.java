@@ -1,5 +1,6 @@
 package com.rebel.Ecom.Butter_sb_API.Models;
 
+import com.rebel.Ecom.Butter_sb_API.Models.RoleAuth.Authority;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -39,8 +40,14 @@ public class User implements UserDetails
     private List<UserRole> roles = new ArrayList<>();
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+    public Collection<? extends GrantedAuthority> getAuthorities()
+    {
+        ArrayList<Authority> authorities = new ArrayList<>();
+        this.roles.forEach(role -> {
+            authorities.add(new Authority(role.getRName()));
+        });
+
+        return authorities;
     }
 
     @Override

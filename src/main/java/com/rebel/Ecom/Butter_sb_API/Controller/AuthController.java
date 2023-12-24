@@ -1,5 +1,6 @@
 package com.rebel.Ecom.Butter_sb_API.Controller;
 
+import com.rebel.Ecom.Butter_sb_API.Models.User;
 import com.rebel.Ecom.Butter_sb_API.jwtCompo.JwtHelper;
 import com.rebel.Ecom.Butter_sb_API.jwtCompo.JwtRequest;
 import com.rebel.Ecom.Butter_sb_API.jwtCompo.JwtResponse;
@@ -14,6 +15,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+
+@CrossOrigin
 @RestController
 @RequestMapping("/auth")
 public class AuthController
@@ -55,5 +59,12 @@ public class AuthController
     public String exceptionHandler() {
         return "Invalid Credentials !!";
     }
+
+    @GetMapping("/current-user")
+    public User getCurrentUser(Principal principal)
+    {
+        return (User)this.userDetailsService.loadUserByUsername(principal.getName());
+    }
+
 
 }

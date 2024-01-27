@@ -7,6 +7,8 @@ import lombok.Setter;
 
 import jakarta.persistence.*;
 
+import java.util.Set;
+
 @Entity
 @Table(name="butter_product")
 @NoArgsConstructor
@@ -25,10 +27,21 @@ public class Product
     @Column(name = "pDes")
     private String pDes;
 
-    private Float price;
+    private Float actualPrice;
 
-    @Column(name = "pImage")
-    private String pImage;
+    private Float discountPrice;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "product_images",
+            joinColumns = {
+             @JoinColumn(name = "p_id")
+            },
+
+            inverseJoinColumns = {
+                    @JoinColumn(name = "id")
+            }
+    )
+    private Set<ImageModel> productImages;
 
     @Column(name = "available")
     private Boolean available = true;

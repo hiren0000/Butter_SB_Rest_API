@@ -1,15 +1,23 @@
 package com.rebel.Ecom.Butter_sb_API.Controller;
 
 import com.rebel.Ecom.Butter_sb_API.GeneralResponse.ApiResponse;
+import com.rebel.Ecom.Butter_sb_API.Models.ImageModel;
 import com.rebel.Ecom.Butter_sb_API.Models.Product;
 import com.rebel.Ecom.Butter_sb_API.Services.ProductService;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/butter/api/v1/product")
 public class ProductController
@@ -17,10 +25,23 @@ public class ProductController
     @Autowired
     private ProductService productService;
 
-    @PostMapping("/category/adding-prod")
-    public ResponseEntity<Product> addNewProforCat(@RequestBody Product product)
+    @PostMapping(value = "/category/adding-prod", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<Product> addNewProforCat(@RequestPart("product") Product product, @RequestPart("imageFile") MultipartFile[] file)
     {
-        return new ResponseEntity<>(this.productService.addNewProd(product), HttpStatus.OK );
+
+        try
+        {
+            Set<ImageModel> productImages = this.uploadImage(file);
+            product.setProductImages(productImages);
+            return new ResponseEntity<>(this.productService.addNewProd(product), HttpStatus.OK );
+
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            return null;
+        }
+
     }
 
 
@@ -29,6 +50,24 @@ public class ProductController
     public ResponseEntity<Product> addNewPro(@RequestBody Product product)
     {
         return new ResponseEntity<>(this.productService.addProduct(product), HttpStatus.OK );
+    }
+
+    //Receiving Multi part file === and then fetching image details
+    public Set<ImageModel> uploadImage(MultipartFile[] multipartFiles) throws IOException
+    {
+        Set<ImageModel> imageModels = new HashSet<>();
+
+        for(MultipartFile file : multipartFiles)
+        {
+            ImageModel imageModel = new ImageModel(
+                    file.getOriginalFilename(),
+                    file.getContentType(),
+                    file.getBytes()
+            );
+            imageModels.add(imageModel);
+        }
+
+        return imageModels;
     }
 
     //updating

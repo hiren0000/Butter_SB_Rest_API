@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/butter/api/v1/subCategory")
 public class SubCategoryController
@@ -38,7 +39,7 @@ public class SubCategoryController
     }
 
     //get list of sub-categories
-    @GetMapping("/")
+    @GetMapping("/list")
     public ResponseEntity<List<SubCategory>> getListOfCategory()
     {
         return ResponseEntity.ok(this.subCategoryService.getAllCate());

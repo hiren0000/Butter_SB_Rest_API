@@ -15,7 +15,7 @@ import lombok.Setter;
 public class ImageModel
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
     private String imageName;
     private String imageType;

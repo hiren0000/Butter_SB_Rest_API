@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/butter/api/v1/category")
 public class CategoryController
@@ -16,7 +17,7 @@ public class CategoryController
     private CategoryService categoryService;
 
     //Adding new category
-    @PostMapping("/")
+    @PostMapping("/add-new-category")
     public ResponseEntity<Category> addCategory(@RequestBody Category category)
     {
         Category addedCate = this.categoryService.addCategory(category);
@@ -24,7 +25,7 @@ public class CategoryController
     }
 
     //update category
-    @PutMapping("/")
+    @PutMapping("/update-category")
     public ResponseEntity<Category> updateCategory(@RequestBody Category category)
     {
         Category updatedCate = this.categoryService.updateCate(category);
@@ -34,7 +35,7 @@ public class CategoryController
     }
 
     //get list of categories
-    @GetMapping("/")
+    @GetMapping("/list")
     public ResponseEntity<?> getListOfCategory()
     {
         return ResponseEntity.ok(this.categoryService.getAllCate());

@@ -50,6 +50,7 @@ public class SecurityConfig
                 .exceptionHandling(ex -> ex.authenticationEntryPoint(jwtAuthEntryPoint))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider);
+        http.cors(cors -> cors.getClass());
         http.addFilterBefore(jwtAuthFilterr, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }

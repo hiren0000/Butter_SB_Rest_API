@@ -21,26 +21,17 @@ public class Product
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer pId;
 
-    @Column(name = "pName")
-    private String pName;
 
-    @Column(name = "pDes")
-    private String pDes;
+    private String productName;
+
+
+    private String productDes;
 
     private Float actualPrice;
 
     private Float discountPrice;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "product_images",
-            joinColumns = {
-             @JoinColumn(name = "p_id")
-            },
-
-            inverseJoinColumns = {
-                    @JoinColumn(name = "id")
-            }
-    )
     private Set<ImageModel> productImages;
 
     @Column(name = "available")

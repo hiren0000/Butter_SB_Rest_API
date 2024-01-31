@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 
-@CrossOrigin
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/auth")
 public class AuthController
@@ -42,7 +42,14 @@ public class AuthController
         return new ResponseEntity<>(new JwtResponse(token), HttpStatus.OK);
     }
 
-    private void doAuthenticate(String email, String password) {
+    @GetMapping("/current-user")
+    public User getCurrentUser(Principal principal)
+    {
+        return (User)this.userDetailsService.loadUserByUsername(principal.getName());
+    }
+
+    private void doAuthenticate(String email, String password)
+    {
 
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(email, password);
         try {
@@ -60,11 +67,7 @@ public class AuthController
         return "Invalid Credentials !!";
     }
 
-    @GetMapping("/current-user")
-    public User getCurrentUser(Principal principal)
-    {
-        return (User)this.userDetailsService.loadUserByUsername(principal.getName());
-    }
+
 
 
 }

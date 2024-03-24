@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin("*")
 @RestController
@@ -20,18 +21,52 @@ public class UserController
 
     //Creating new User
     @PostMapping("/adding-new-user")
-    public ResponseEntity<User> addNewUser(@RequestBody User user)
+    public ResponseEntity<?> addNewUser(@RequestBody User user)
     {
-        User createdUser = this.userService.addUser(user);
-        return new ResponseEntity<>(createdUser, HttpStatus.OK);
+
+            User createdUser = this.userService.addUser(user);
+
+            Map<String, Object> map;
+            HttpStatus status = null;
+            String message = "";
+
+
+                if (createdUser != null) {
+                    status = HttpStatus.CREATED;
+                    message = "User has been successfully added into db";
+
+                } else {
+                    status = HttpStatus.NO_CONTENT;
+                    message = "User has not been successfully added into db";
+
+                }
+        map = Map.of("object", createdUser, "status", status, "message", message);
+        return ResponseEntity.ok(map);
+
+
     }
 
     //Updating user
     @PutMapping("/")
-    public ResponseEntity<User> updateUser(@RequestBody User user)
+    public ResponseEntity<?> updateUser(@RequestBody User user)
     {
         User updatedUser = this.userService.updateUser(user);
-        return new ResponseEntity<>(updatedUser, HttpStatus.OK);
+
+        Map<String, Object> map;
+        HttpStatus status = null;
+        String message = "";
+
+        if (updatedUser != null) {
+            status = HttpStatus.OK;
+            message = "User has been updated successfully";
+
+        } else {
+            status = HttpStatus.NO_CONTENT;
+            message = "User has not been found";
+
+        }
+        map = Map.of("object", updatedUser, "status", status, "message", message);
+        return ResponseEntity.ok(map);
     }
 
     //Fetching all users
@@ -39,14 +74,34 @@ public class UserController
     public ResponseEntity<List<User>> getAllUsers()
     {
         return new ResponseEntity<>(this.userService.getAllUsers(), HttpStatus.OK);
+
+
     }
 
     //Fetching Single User
     @GetMapping("/{id}")
-    public ResponseEntity<User> getSingleUser(@PathVariable Integer id)
+    public ResponseEntity<?> getSingleUser(@PathVariable Integer id)
     {
 
-        return new ResponseEntity<>(this.userService.getSingleUserById(id), HttpStatus.OK);
+       User user = this.userService.getSingleUserById(id);
+
+        Map<String, Object> map;
+        HttpStatus status = null;
+        String message = "";
+
+
+        if (user != null) {
+            status = HttpStatus.OK;
+            message = "User has been successfully fetched";
+
+        } else {
+            status = HttpStatus.NOT_FOUND;
+            message = "User has not been found";
+
+        }
+        map = Map.of("object", user, "status", status, "message", message);
+        return ResponseEntity.ok(map);
+
     }
 
     //Deleting user

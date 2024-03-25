@@ -9,12 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @CrossOrigin("*")
@@ -25,15 +27,33 @@ public class ProductController
     @Autowired
     private ProductService productService;
 
+
     @PostMapping(value = "/category/adding-prod", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<Product> addNewProforCat(@RequestPart("product") Product product, @RequestPart("imageFile") MultipartFile[] file)
+    public ResponseEntity<?> addNewProforCat(@RequestPart("product") Product product, @RequestPart("imageFile") MultipartFile[] file)
     {
 
         try
         {
             Set<ImageModel> productImages = this.uploadImage(file);
             product.setProductImages(productImages);
-            return new ResponseEntity<>(this.productService.addNewProd(product), HttpStatus.OK );
+            Product product1 = this.productService.addNewProd(product);
+            Map<String, Object> map;
+            HttpStatus status = null;
+            String message = "";
+
+            if(product1 != null)
+            {
+                status = HttpStatus.OK;
+                message="Product successfully saved into db !!";
+            }
+            else
+            {
+                status= HttpStatus.NO_CONTENT;
+                message = "Product has not been added !!";
+            }
+
+            map = Map.of("object", product1, "status", status, "message",message);
+            return ResponseEntity.ok(map);
 
         }
         catch (Exception e)
@@ -47,9 +67,27 @@ public class ProductController
 
     //Adding product for subcategory for product
     @PostMapping("/category/subcategory/adding-prod")
-    public ResponseEntity<Product> addNewPro(@RequestBody Product product)
+    public ResponseEntity<?> addNewPro(@RequestBody Product product)
     {
-        return new ResponseEntity<>(this.productService.addProduct(product), HttpStatus.OK );
+        Product product1 = this.productService.addProduct(product);
+
+        Map<String, Object> map;
+        HttpStatus status = null;
+        String message = "";
+
+        if(product1 != null)
+        {
+            status = HttpStatus.OK;
+            message="Product successfully saved into db !!";
+        }
+        else
+        {
+            status= HttpStatus.NO_CONTENT;
+            message = "Product has not been added !!";
+        }
+
+        map = Map.of("object", product1, "status", status, "message",message);
+        return ResponseEntity.ok(map);
     }
 
     //Receiving Multi part file === and then fetching image details
@@ -78,7 +116,7 @@ public class ProductController
     }
 
     //Fetching List of Prod
-    @GetMapping("/All-Products")
+    @GetMapping("/all-Products")
     public ResponseEntity<List<Product>> getALlPro()
     {
         return new ResponseEntity<>(this.productService.getAllProd(),HttpStatus.OK);
@@ -86,9 +124,27 @@ public class ProductController
 
     //Fetching Single  Prod
     @GetMapping("/{pId}")
-    public ResponseEntity<Product> getSinglePro(@PathVariable Integer pId)
+    public ResponseEntity<?> getSinglePro(@PathVariable Integer pId)
     {
-        return new ResponseEntity<>(this.productService.getSingleProd(pId),HttpStatus.OK);
+        Product product = this.productService.getSingleProd(pId);
+
+        Map<String, Object> map;
+        HttpStatus status = null;
+        String message = "";
+
+        if(product != null)
+        {
+            status = HttpStatus.OK;
+            message="Product successfully saved into db !!";
+        }
+        else
+        {
+            status= HttpStatus.NO_CONTENT;
+            message = "Product has not been added !!";
+        }
+
+        map = Map.of("object", product, "status", status, "message",message);
+        return ResponseEntity.ok(map);
     }
 
     //Delete
